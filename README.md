@@ -1,4 +1,4 @@
-## HomeWork D3_4_NewsPaper
+## HomeWork D4_4_NewsPaper
 
 Начальная страница: http://127.0.0.1:8000/news/  
 Страница поиска: http://127.0.0.1:8000/news/search/  
