@@ -39,9 +39,9 @@ class PostSearch(ListView):
     form_class = PostForm
     paginate_by = 2
 
-    # def get_queryset(self):
-    #     queryset = PostFilter(self.request.GET, super().get_queryset()).qs
-    #     return queryset
+    def get_queryset(self):
+        queryset = PostFilter(self.request.GET, super().get_queryset()).qs
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

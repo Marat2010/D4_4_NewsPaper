@@ -34,7 +34,8 @@
                 <th scope="col">Действия</th>
 
             </tr>
-            {% for post in filter.qs %}
+{#            {% for post in filter.qs %}#}
+            {% for post in posts %}
                 <tr>
                     <td>
                         <a href="{% url 'news:post_detail' post.pk %}">

@@ -1,31 +1,17 @@
-<!-- Проверяем, что поддерживается постраничный вывод -->
 {% if is_paginated %}
-
-    <div align="center">
-
-        <!-- Если доступна предыдущая страница, то даём ссылку на неё и самую первую страницу -->
-        {% if page_obj.has_previous %}
-            <a href="?page=1">Начало</a>
-            <a href="?page={{ page_obj.previous_page_number }}"> <<< </a>
-            {#        <a href="?page={{ page_obj.previous_page_number }}"> &#11013; </a>#}
+    {% if page_obj.has_previous %}
+        <a href="?{{ request.GET.urlencode }}&page=1">First</a>
+        <a href="?{{ request.GET.urlencode }}&page={{ page_obj.previous_page_number }}"><<<</a>
+    {% endif %}
+    {% for num in page_obj.paginator.page_range %}
+        {% if page_object.number == num %}
+            <a>{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <a href="?{{ request.GET.urlencode }}&page={{ num }}">{{ num }}</a>
         {% endif %}
-
-        <!-- Показываем только текущую страницу и ближайшие к ней, чтобы список не тянулся и не захламлял страницу -->
-        {% for num in page_obj.paginator.page_range %}
-            {% if page_obj.number == num %}
-                <a>{{ num }}</a>
-            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                <a href="?page={{ num }}">{{ num }}</a>
-            {% endif %}
-        {% endfor %}
-
-        <!-- Если есть следующая страница, то даём ссылку на неё и на самую последнюю страницу -->
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">>>></a>
-            {#        <a href="?page={{ page_obj.next_page_number }}"> &#10145;</a>#}
-            <a href="?page={{ page_obj.paginator.num_pages }}">Конец</a>
-        {% endif %}
-
-    </div>
-
+    {% endfor %}
+    {% if page_obj.has_next %}
+        <a href="?{{ request.GET.urlencode }}&page={{ page_obj.next_page_number }}">>>></a>
+        <a href="?{{ request.GET.urlencode }}&page={{ page_obj.paginator.num_pages }}">Last</a>
+    {% endif %}
 {% endif %}
