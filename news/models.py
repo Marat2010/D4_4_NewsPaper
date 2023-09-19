@@ -40,7 +40,7 @@ class Category(models.Model):
 
 
 class Post(models.Model):
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, verbose_name='Автор')
 
     NEWS = 'NW'
     ARTICLE = 'AR'
@@ -50,15 +50,19 @@ class Post(models.Model):
         (ARTICLE, 'Статья'),
     ]
 
-    categoryType = models.CharField(max_length=2, choices=TYPES, default=ARTICLE)
-    dateCreation = models.DateTimeField(auto_now_add=True)
-    postCategory = models.ManyToManyField(Category, through='PostCategory')
-    title = models.CharField(max_length=128)
-    text = models.TextField()
-    rating = models.SmallIntegerField(default=0)
+    categoryType = models.CharField(max_length=2, choices=TYPES, default=ARTICLE, verbose_name='Тип статьи')
+    dateCreation = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации')
+    postCategory = models.ManyToManyField(Category, through='PostCategory', verbose_name='Категории статьи')
+    title = models.CharField(max_length=128, verbose_name='Заголовок')
+    text = models.TextField(verbose_name='Текст статьи')
+    rating = models.SmallIntegerField(default=0, verbose_name='Рейтинг')
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        # добавим абсолютный путь, чтобы после создания нас перебрасывало на страницу с товаром
+        return f'/news/{self.id}'
 
     def like(self):
         self.rating += 1

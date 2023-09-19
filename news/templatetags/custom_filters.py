@@ -15,6 +15,6 @@ banned_word_list = [
 @register.filter(name='Censor')
 def censor(text):
     for bw in banned_word_list:
-        text = text.lower().replace(bw.lower(), '...')
+        text = text.lower().replace(bw.lower(), f'{bw[0:2]}...')
     return text
 
